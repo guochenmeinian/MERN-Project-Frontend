@@ -1,8 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import ShoppingCartTwoToneIcon from '@mui/icons-material/ShoppingCartTwoTone';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import SearchIcon from '@mui/icons-material/Search';
+import { Link } from 'react-router-dom';
 
 // Info should appear before Container to avoid error
 const Info = styled.div`
@@ -80,7 +81,7 @@ const Product = ({item}) => {
             <SearchIcon/>
           </Icon>
           <Icon>
-            <ShoppingCartTwoToneIcon/>
+            <Link to={`/product/${item._id}`}><ShoppingCartOutlinedIcon/></Link>
           </Icon>
           <Icon>
             <FavoriteBorderIcon/>

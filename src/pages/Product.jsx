@@ -6,11 +6,16 @@ import Newsletter from "../components/NewsLetter"
 import Footer from "../components/Footer"
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { mobile } from '../responsive'
+import { useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { publicRequest, userRequest } from '../requestMethods'
 
 const Wrapper = styled.div`
     display: flex;
     margin: 50px;
     padding: 50px;
+    ${mobile({ margin: "0px", padding: "10px", flexDirection: "column" })}
 `
 
 const ImageContainer = styled.div`
@@ -21,12 +26,14 @@ const Image = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    
 `
 
 const InfoContainer = styled.div`
     flex: 1;
     margin-left: 50px;
     padding: 0px 50px;
+    ${mobile({ padding: "15px", margin: "0px" })}
 `
 
 const Title = styled.h1`
@@ -46,6 +53,7 @@ const FilterContainer = styled.div`
     width: 50%;
     margin: 30px 0px;
     justify-content: space-between;
+    ${mobile({ width: "95%" })}
 `
 const Filter = styled.div`
     display: flex;
@@ -55,6 +63,7 @@ const Filter = styled.div`
 const FilterTitle = styled.span`
     display: flex;
     align-items: center;
+    ${mobile({ width: "0px 20px", flexDirection: "column" })}
 `
 
 const FilterColor = styled.div`
@@ -78,6 +87,7 @@ const AddContainer = styled.div`
     align-items: center;
     width: 50%;
     justify-content: space-between;
+    ${mobile({width:"100%"})}
 `
 
 const AmountContainer = styled.div`
@@ -113,48 +123,81 @@ const Icon = styled.div`
 `
 
 const Product = () => {
+    
+    // get id and update the page accrodingly
+    const location = useLocation();
+    const id = location.pathname.split("/")[2]; // get id (after second / which is after products)
+    const [product, setProduct] = useState({});
+
+    // update amount of the selected products
+    const [quantity, setQuantity] = useState(1);
+
+    // update color and size
+    const [color, setColor] = useState("");
+    const [size, setSize] = useState("");
+
+    // update product using effect hook and make id dependency
+    useEffect(()=>{
+        const getProduct = async ()=>{
+            try{
+                const res = await publicRequest.get("products/" + id);
+                setProduct(res.data);
+            }catch(err){
+                console.log(err);
+            }
+        }
+        getProduct();
+    }, [id])
+
+    const handleQuantity = (type) => {
+        if (type === "dec") {
+          quantity > 1 && setQuantity(quantity - 1);
+        } else {
+          setQuantity(quantity + 1);
+        }
+    };
+
+    const handleShoppingButton = ()=>{
+        
+    }
+
   return (
     <div>
         <Announcement/>
         <Navbar/>
         <Wrapper>
             <ImageContainer>
-                <Image src="https://image.goat.com/transform/v1/attachments/product_template_pictures/images/073/278/580/original/954194_00.png.png?action=crop&width=600"/>
+                <Image src={product.img}/>
             </ImageContainer>
             <InfoContainer>
-                <Title>Ami Tonal Sweatshirt</Title>
+                <Title>{product.title}</Title>
                 <Desc>
-                Cut from heavy loopback organic cotton, 
-                AMI's sweatshirt is a boxy fit for a vintage athleisure look. 
-                The crew neck style has raglan sleeves for comfortable movement. 
-                The Ami de Cœur embroidery punctuates the chest. Color: natural
+                    {product.desc}
                 </Desc>
-                <Price>$400</Price>
+                <Price>$ {product.price}</Price>
                 <FilterContainer>
                     <Filter>
-                        <FilterTitle>Color</FilterTitle>
-                        <FilterColor color="#faebd7"/>
-                        <FilterColor color="blue"/>
-                        <FilterColor color="black"/>
+                        {/* ?: check if color or size is selected*/}
+                        {product.color?.map((c)=>(
+                            <FilterColor color={c} key={c} onClick={()=>setColor(c)} /> // key (each color) is unique
+                        ))}
                     </Filter>
                     <Filter>
                         <FilterTitle>Size</FilterTitle>
-                        <FilterSize>
-                            <FilterSizeOption>S</FilterSizeOption>
-                            <FilterSizeOption>M</FilterSizeOption>
-                            <FilterSizeOption>L</FilterSizeOption>
-                            <FilterSizeOption>XL</FilterSizeOption>
-                            <FilterSizeOption>2XL</FilterSizeOption>
+                        <FilterSize onChange={(e)=>setSize(e.target.value)}>
+                            {product.size?.map((s)=>(
+                                <FilterSizeOption key={s}>{s}</FilterSizeOption>
+                            ))}
                         </FilterSize>
                     </Filter>
                 </FilterContainer>
                 <AddContainer>
                     <AmountContainer>
-                        <Icon><RemoveIcon/></Icon>
-                        <Amount>1</Amount>
-                        <Icon><AddIcon/></Icon>
+                        <Icon><RemoveIcon onClick={() => handleQuantity("dec")} /></Icon>
+                        <Amount>{quantity}</Amount>
+                        <Icon><AddIcon onClick={() => handleQuantity("inc")} /></Icon>
                     </AmountContainer>
-                    <Button>Add To Cart</Button>
+                    <Button onClick={handleShoppingButton}>Add To Cart</Button>
                 </AddContainer>
             </InfoContainer>
         </Wrapper>

@@ -83,7 +83,9 @@ const Footer = () => {
     <Container>
         <Left>
             <Logo>Contact me</Logo>
-            <Desc>Click the icons below to reach me. Looking forward to chat with you :)</Desc>
+            <Desc>Click the "Full Stack Project" between the search bar and register button above to visit my <strong>Github</strong> Page.
+                  There you'll see the source code for my projects. 
+                  The icons below are not working. I'm Looking forward to chat with you :)</Desc>
             <SocialContainer>
                 <SocialIcon><GitHubIcon/></SocialIcon>
                 <SocialIcon><InstagramIcon/></SocialIcon>
