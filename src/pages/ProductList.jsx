@@ -51,7 +51,7 @@ const ProductList = () => {
     <div>
       <Navbar />
       <Announcement />
-      <h1 style={{'margin-left': '20px', 'margin-top': '10px'}}>{cat}</h1>
+      <h1 style={{'marginLeft': '20px', 'marginTop': '10px'}}>{cat}</h1>
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>

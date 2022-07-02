@@ -81,7 +81,7 @@ const Product = ({item}) => {
             <SearchIcon/>
           </Icon>
           <Icon>
-            <Link to={`/product/${item._id}`}><ShoppingCartOutlinedIcon/></Link>
+            <div><Link to={`/product/${item._id}`}><ShoppingCartOutlinedIcon/></Link></div>
           </Icon>
           <Icon>
             <FavoriteBorderIcon/>

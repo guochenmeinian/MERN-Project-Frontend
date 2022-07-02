@@ -46,6 +46,7 @@ const Products = ({ cat, filters, sort }) => {
     setFilteredProducts(
         // note: filter function only takes array []
         products.filter((item) =>
+        // eslint-disable-next-line
         Object.entries(filters = filters === undefined ? "" : filters).every(([key, value]) =>
           item[key].includes(value)
           )
@@ -76,7 +77,7 @@ const Products = ({ cat, filters, sort }) => {
   // only display a maximum of 8 products by using slice method
   return (
     <Container>
-      {filteredProducts.slice(0, 12).map((item) => <Product item={item} key={item.id} />)}
+      {filteredProducts.slice(0, 15).map((item) => <Product item={item} key={item.id} />)}
     </Container>
   );
 };
