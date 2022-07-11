@@ -7,6 +7,7 @@ import Newsletter from "../components/NewsLetter"
 import Footer from "../components/Footer"
 import { mobile } from '../responsive'
 import { useLocation } from 'react-router-dom'
+// import { useDispatch } from 'react-redux'
 
 const FilterContainer = styled.div`
   display: flex;

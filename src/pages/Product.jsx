@@ -163,7 +163,7 @@ const Product = () => {
   };
 
   const handleShoppingButton = () => {
-    console.log(product.price)
+    // console.log(product.price) // for testing purpose
     dispatch(
       addProduct({ ...product, quantity, color, size })
     );
