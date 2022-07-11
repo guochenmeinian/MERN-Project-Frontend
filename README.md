@@ -13,8 +13,8 @@
 #### You will also see any lint errors in the console.
 
 ### Familiarized myself with: 
-> - React.js Hooks (State/Effect/useSelection)
-> - Redux, Props, Material UI
+> - React.js Hooks (State/Effect/Selection)
+> - Redux, Persist, Props, Material UI
 > - Asynchronous API (async/await)
 > - HTTP Protocals, fetch data from backend
 > - JSX, components design and usage, css modules, etc.
